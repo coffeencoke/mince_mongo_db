@@ -1,50 +1,47 @@
-require_relative '../../lib/mince/data_store'
+require_relative '../../../lib/mingo/interface'
 
-describe Mince::DataStore do
-  subject { described_class.instance }
+describe Mince::Mingo::Interface do
+
+  let(:interface) { described_class }
+  let(:primary_key) { Mince::Mingo::Config.primary_key }
 
   let(:db) { mock 'mongo database' }
-  let(:connection) { mock 'mongo connection', db: db }
   let(:mongo_data_store_connection) { mock 'mongo_data_store_connection', :db => db}
   let(:collection) { mock 'some collection'}
   let(:collection_name) { 'some_collection_name'}
   let(:primary_key) { mock 'primary key'}
   let(:mock_id) { mock 'id' }
-  let(:data) { { :_id => mock_id}}
+  let(:data) { { primary_key => mock_id}}
   let(:return_data) { mock 'return data' }
 
   before do
-    Mince::Connection.stub(:instance => mongo_data_store_connection)
-    db.stub(:collection).with(collection_name).and_return(collection)
+    Mince::Mingo::DataStore.stub(:db).and_return(db)
+    Mince::Mingo::DataStore.stub(:collection).with(collection_name).and_return(collection)
+    Mince::Mingo::Config.stub(primary_key: primary_key)
   end
 
   it 'uses the correct collection' do
-    db.stub(collection: collection)
-    subject.collection('collection name').should == collection
-  end
-
-  it 'has a primary key identifier' do
-    described_class.primary_key_identifier.should == '_id'
+    interface.collection(collection_name).should == collection
   end
 
   it 'can delete a field' do
     field = mock 'field to delete'
     collection.should_receive(:update).with({}, {'$unset' => { field => 1 } }, multi: true)
 
-    subject.delete_field(collection_name, field)
+    interface.delete_field(collection_name, field)
   end
 
   it 'can delete all records the match a given set of params' do
     params = mock 'params to condition the deleted records to'
     collection.should_receive(:remove).with(params)
 
-    subject.delete_by_params(collection_name, params)
+    interface.delete_by_params(collection_name, params)
   end
 
   it 'can delete a collection' do
     collection.should_receive(:drop)
 
-    subject.delete_collection(collection_name)
+    interface.delete_collection(collection_name)
   end
 
   describe "Generating a primary key" do
@@ -59,37 +56,37 @@ describe Mince::DataStore do
   it 'can write to the collection' do
     collection.should_receive(:insert).with(data).and_return(return_data)
 
-    subject.add(collection_name, data).should == return_data
+    interface.add(collection_name, data).should == return_data
   end
 
   it 'can update a field with a specific value' do
     key = mock 'key'
     value = mock 'value'
     id = mock 'id'
-    collection.should_receive(:update).with({ '_id' => id }, { '$set' => { key => value } })
+    collection.should_receive(:update).with({ primary_key => id }, { '$set' => { key => value } })
 
-    subject.update_field_with_value collection_name, id, key, value
+    interface.update_field_with_value collection_name, id, key, value
   end
 
   it 'can increment a field by a specific amount' do
     key = mock 'key'
     amount = mock 'amount to increment the field by'
     id = mock 'id'
-    collection.should_receive(:update).with({ '_id' => id }, { '$inc' => { key => amount } })
+    collection.should_receive(:update).with({ primary_key => id }, { '$inc' => { key => amount } })
 
-    subject.increment_field_by_amount collection_name, id, key, amount
+    interface.increment_field_by_amount collection_name, id, key, amount
   end
 
   it 'can read from the collection' do
     collection.should_receive(:find).and_return(return_data)
 
-    subject.find_all(collection_name).should == return_data
+    interface.find_all(collection_name).should == return_data
   end
 
   it 'can replace a record' do
-    collection.should_receive(:update).with({"_id" => data[:_id]}, data)
+    collection.should_receive(:update).with({primary_key => data[primary_key]}, data)
 
-    subject.replace(collection_name, data)
+    interface.replace(collection_name, data)
   end
 
   it 'can get one document' do
@@ -98,7 +95,7 @@ describe Mince::DataStore do
 
     collection.should_receive(:find_one).with(field => value).and_return(return_data)
 
-    subject.find(collection_name, field, value).should == return_data
+    interface.find(collection_name, field, value).should == return_data
   end
 
   it 'can clear the data store' do
@@ -108,42 +105,42 @@ describe Mince::DataStore do
     db.should_receive(:drop_collection).with('collection_1')
     db.should_receive(:drop_collection).with('collection_2')
 
-    subject.clear
+    interface.clear
   end
 
   it 'can get all records of a specific key value' do
     collection.should_receive(:find).with({"key" => "value"}).and_return(return_data)
 
-    subject.get_all_for_key_with_value(collection_name, "key", "value").should == return_data
+    interface.get_all_for_key_with_value(collection_name, "key", "value").should == return_data
   end
 
   it 'can get a record of a specific key value' do
     collection.should_receive(:find).with({"key" => "value"}).and_return([return_data])
 
-    subject.get_for_key_with_value(collection_name, "key", "value").should == return_data
+    interface.get_for_key_with_value(collection_name, "key", "value").should == return_data
   end
 
   it 'can get all records where a value includes any of a set of values' do
     collection.should_receive(:find).with({"key1" => { "$in" => [1,2,4]} }).and_return(return_data)
 
-    subject.containing_any(collection_name, "key1", [1,2,4]).should == return_data
+    interface.containing_any(collection_name, "key1", [1,2,4]).should == return_data
   end
 
   it 'can get all records where the array includes a value' do
     collection.should_receive(:find).with({"key" => "value"}).and_return(return_data)
 
-    subject.array_contains(collection_name, "key", "value").should == return_data
+    interface.array_contains(collection_name, "key", "value").should == return_data
   end
 
   it 'can push a value to an array for a specific record' do
     collection.should_receive(:update).with({"key" => "value"}, { '$push' => { "array_key" => "value_to_push"}}).and_return(return_data)
 
-    subject.push_to_array(collection_name, :key, "value", :array_key, "value_to_push").should == return_data
+    interface.push_to_array(collection_name, :key, "value", :array_key, "value_to_push").should == return_data
   end
 
   it 'can remove a value from an array for a specific record' do
     collection.should_receive(:update).with({"key" => "value"}, { '$pull' => { "array_key" => "value_to_remove"}}).and_return(return_data)
 
-    subject.remove_from_array(collection_name, :key, "value", :array_key, "value_to_remove").should == return_data
+    interface.remove_from_array(collection_name, :key, "value", :array_key, "value_to_remove").should == return_data
   end
 end
