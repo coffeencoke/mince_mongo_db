@@ -21,7 +21,7 @@ module Mince
       attr_reader :db
 
       def initialize
-        @db = Mince::Mingo::Connection.instance.db
+        @db = Mince::Mingo::Connection.db
       end
     end
   end

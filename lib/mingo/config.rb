@@ -22,6 +22,14 @@ module Mince # :nodoc:
         instance.database_name
       end
 
+      def self.database_name=(val)
+        instance.database_name = val
+      end
+
+      def self.test_env_number
+        ENV['TEST_ENV_NUMBER']
+      end
+
       attr_accessor :primary_key, :database_name
 
       def initialize
@@ -30,16 +38,7 @@ module Mince # :nodoc:
       end
 
       def database_name=(name)
-        env_suffix = if test_env_number.nil? || test_env_number == ''
-          ""
-        else
-          "-#{ENV['TEST_ENV_NUMBER']}"
-        end
-        @database_name = "#{name}#{env_suffix}"
-      end
-
-      def test_env_number
-        ENV['TEST_ENV_NUMBER']
+        @database_name = [name, self.class.test_env_number].compact.join("-")
       end
     end
   end
