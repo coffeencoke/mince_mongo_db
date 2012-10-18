@@ -9,12 +9,10 @@ describe Mince::Mingo::Connection do
 
   before do
     Mince::Mingo::Config.stub(database_name: database_name)
+    subject.connection = mongo_connection
   end
 
   it 'is a mongo connection' do
-    Mongo::Connection.should_receive(:new).and_return(mongo_connection)
-    mongo_connection.should_receive(:db).with(database_name).and_return(db)
-
     subject.connection.should == mongo_connection
   end
 end

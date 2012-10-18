@@ -7,7 +7,7 @@ module Mince
     class Connection
       include Singleton
 
-      attr_reader :connection, :db
+      attr_accessor :connection, :db
 
       def self.connection
         instance.connection
@@ -18,8 +18,12 @@ module Mince
       end
 
       def initialize
-        @connection = Mongo::Connection.new
-        @db = connection.db(database_name)
+        self.connection = Mongo::Connection.new
+      end
+
+      def connection=(con)
+        @connection = con
+        self.db = connection.db(database_name)
       end
 
       def database_name

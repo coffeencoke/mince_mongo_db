@@ -18,10 +18,10 @@ module Mince
         db.collection(collection_name)
       end
 
-      attr_reader :db
+      attr_accessor :db
 
       def initialize
-        @db = Mince::Mingo::Connection.db
+        self.db = Mince::Mingo::Connection.db
       end
     end
   end

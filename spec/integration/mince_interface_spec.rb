@@ -6,10 +6,6 @@ describe 'Mince Interface with Mingo' do
     Mince::Config.interface = Mince::Mingo::Interface
   end
 
-  after do
-    Mince::Mingo::Interface.clear
-  end
-
   it_behaves_like 'a mince interface'
 end
 

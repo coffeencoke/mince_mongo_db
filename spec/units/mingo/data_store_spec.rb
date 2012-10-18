@@ -6,7 +6,7 @@ describe Mince::Mingo::DataStore do
   let(:collection_name) { mock }
 
   before do
-    Mince::Mingo::Connection.stub(db: db)
+    described_class.instance.db = db
   end
 
   it 'can return a specific collection and provides access to the db' do
