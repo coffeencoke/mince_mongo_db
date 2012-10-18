@@ -10,7 +10,7 @@ module Mince
       attr_reader :connection, :db
 
       def self.connection
-        instance.connection        
+        instance.connection
       end
 
       def self.db
@@ -22,7 +22,6 @@ module Mince
         @db = connection.db(database_name)
       end
 
-      # todo: push this into a config class which uses yaml or something like that to pull in the different environment settings?
       def database_name
         Config.database_name
       end

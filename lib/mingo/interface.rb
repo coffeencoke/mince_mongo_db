@@ -108,7 +108,7 @@ module Mince
 
       def self.db
         DataStore.db
-      end    
+      end
     end
   end
 end
