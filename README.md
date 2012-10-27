@@ -1,63 +1,47 @@
 # Mingo
 
-Provides a very light weight interface for storing and retreiving information to MongoDB.
+Mingo is a ruby ORM to provide a quick way to develop with a MongoDB database in Ruby applications.
 
-The motivation behind this is so your application is not tightly tied to a specific database.  As your application grows you may need to upgrade to a different database or pull specific models to a different persistence strategy.
+Mingo is a database interface that abides to the [Mince](https://github.com/coffeencoke/mince/) interface API requirements and is officially supported by [Mince](https://github.com/coffeencoke/mince/).
 
-[@github](https://github.com/asynchrony/mingo)
-[@rubygems](https://rubygems.org/gems/mingo)
+# How to use it
 
-# How to use
+View the [Mince Wiki](https://github.com/coffeencoke/mince/wiki) on details on how to use this gem.
 
-view the [example mince rails app](https://github.com/coffeencoke/mince_rails_example) to see how to use this.
-
-Start MongoDB at localhost (currently does not support authentication against MongoDB).
-
-From there you can use Mince to add and retrieve data.
+Basically -
 
 ```
-# Add a book to the books collection
-Mince::Mingo::Interface.add 'books', title: 'The World In Photographs', publisher: 'National Geographic'
-
-# Retrieve all records from the books collection
-Mince::Mingo::Interface.find_all 'books'
-
-# Replace a specific book
-Mince::Mingo::Interface.replace 'books', id: 1, title: 'A World In Photographs', publisher: 'National Geographic'
+gem install mince mingo
 ```
 
-View the [data_store.rb](https://github.com/asynchrony/mince/blob/master/lib/mince/data_store.rb) file for all methods available.
+```ruby
+require 'mince'
+require 'mingo'
 
-Use with [mince data model](https://github.com/asynchrony/mince_data_model) to make it easy to change from one data storage to another, like [Hashy Db](https://github.com/asynchrony/hashy_db), a Hash data persistence implementation.
+interface = Mince::Mingo::Interface
+interface.add 'tron_light_cycles', luminating_color: 'red', grid_locked: true, rezzed: false
+interface.add 'tron_light_cycles', luminating_color: 'blue', grid_locked: true, rezzed: true
+interface.find_all('tron_light_cycles') 
+	# => [{:luminating_color=>"red", :grid_locked=>true, :rezzed=>false}, {:luminating_color=>"blue", :grid_locked=>true, :rezzed=>true}] 
+interface.get_for_key_with_value('tron_light_cycles', :luminating_color, 'blue')
+	# => {:luminating_color=>"blue", :grid_locked=>true, :rezzed=>true} 
+```
 
-# Why would you want this?
+Change the database name
 
-- To defer choosing your database until you know most about your application.
-- Provides assitance in designing a database agnostic architecture.
-- When used along with [Hashy Db](https://github.com/asynchrony/hashy_db) it offers very little technical dependencies.  Use Hashy Db in development mode so that you can clone the repo and develop, and run tests, cucumbers without databases, migrations, etc.  Then in production mode, switch to Mince.
+```ruby
+Mince::Mingo::Config.database = 'foo'
 
-If you are able to switch between Hashy Db and Mince, your application will be more open to new and improved database in the future, or as your application evolves you aren't tied to a database.
+
+# Links
+
+* [API Docs](http://rdoc.info/github/coffeencoke/mingo/update_to_v2/frames)
+* [Travis CI](https://travis-ci.org/#!/coffeencoke/mingo)
+* [Rubygems](https://rubygems.org/gems/mingo)
+* [Github](https://github.com/coffeencoke/mingo)
+* [Wiki](https://github.com/coffeencoke/mingo/wiki)
+* [Mince](https://github.com/coffeencoke/mince)
 
 # Contribute
 
-- fork into a topic branch, write specs, make a pull request.
-
-# Owners
-
-Matt Simpson - [@railsgrammer](https://twitter.com/railsgrammer)
-
-Jason Mayer - [@farkerhaiku](https://twitter.com/farkerhaiku)
-
-# Contributors
-
-Amos King - [@adkron](https://twitter.com/adkron)
-
-- Your name here!
-
-![Mince Some App](https://github.com/coffeencoke/gist-files/raw/master/images/mince%20garlic.png)
-
--------
-
-Copyright (c) 2012 Asynchrony
-
-See the LICENSE file for info on licensing
+This gem is officially supported by [Mince](https://github.com/coffeencoke/mince/), please go there to learn how to contribute.
