@@ -2,9 +2,9 @@ module Mince # :nodoc:
   module Mingo # :nodoc:
     require 'singleton'
 
-    # = HashyDb Config
+    # = Config
     #
-    # HashyDb Config specifies the configuration settings for HashyDb
+    # Config specifies the configuration settings
     #
     # @author Matt Simpson
     class Config
@@ -43,4 +43,3 @@ module Mince # :nodoc:
     end
   end
 end
-
