@@ -31,7 +31,7 @@ Change the database name
 
 ```ruby
 Mince::Mingo::Config.database = 'foo'
-
+```
 
 # Links
 
