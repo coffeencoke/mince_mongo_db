@@ -1,9 +1,9 @@
-require_relative '../../../lib/mingo/interface'
+require_relative '../../../lib/mongo_db/interface'
 
-describe Mince::Mingo::Interface do
+describe Mince::MongoDb::Interface do
 
   let(:interface) { described_class }
-  let(:primary_key) { Mince::Mingo::Config.primary_key }
+  let(:primary_key) { Mince::MongoDb::Config.primary_key }
 
   let(:db) { mock 'mongo database' }
   let(:mongo_data_store_connection) { mock 'mongo_data_store_connection', :db => db}
@@ -15,9 +15,9 @@ describe Mince::Mingo::Interface do
   let(:return_data) { mock 'return data' }
 
   before do
-    Mince::Mingo::DataStore.stub(:db).and_return(db)
-    Mince::Mingo::DataStore.stub(:collection).with(collection_name).and_return(collection)
-    Mince::Mingo::Config.stub(primary_key: primary_key)
+    Mince::MongoDb::DataStore.stub(:db).and_return(db)
+    Mince::MongoDb::DataStore.stub(:collection).with(collection_name).and_return(collection)
+    Mince::MongoDb::Config.stub(primary_key: primary_key)
   end
 
   it 'uses the correct collection' do

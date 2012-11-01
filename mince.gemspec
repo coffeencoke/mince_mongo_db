@@ -1,21 +1,33 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require 'mingo/version'
+require 'mongo_db/version'
 
 Gem::Specification.new do |s|
-  s.name        = "mingo"
-  s.version     = Mince::Mingo.version
+  s.name        = "mince_mongo_db"
+  s.version     = Mince::MongoDb.version
   s.authors     = ["Matt Simpson", "Jason Mayer", "Asynchrony"]
   s.email       = ["matt@railsgrammer.com", "jason.mayer@gmail.com"]
-  s.homepage    = "https://github.com/asynchrony/#{s.name}"
+  s.homepage    = "https://github.com/coffeencoke/#{s.name}"
   s.summary     = %q{Lightweight MongoDB ORM for Ruby.}
   s.description = %q{Mince interface library to provide a lightweight MongoDB ORM for Ruby.}
 
   s.rubyforge_project = s.name
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files = %w(
+    lib/mongo_db.rb
+    lib/mongo_db/config.rb
+    lib/mongo_db/connection.rb
+    lib/mongo_db/data_store.rb
+    lib/mongo_db/interface.rb
+    lib/mongo_db/version.rb
+  )
+  s.test_files = %w(
+    spec/integration/mince_interface_spec.rb
+    spec/units/mongo_db/config_spec.rb
+    spec/units/mongo_db/connection_spec.rb
+    spec/units/mongo_db/data_store_spec.rb
+    spec/units/mongo_db/interface_spec.rb
+  )
   s.require_paths = ["lib"]
 
   s.add_dependency('mongo', '~> 1.5.2')

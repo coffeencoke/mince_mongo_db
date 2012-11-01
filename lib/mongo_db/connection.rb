@@ -1,5 +1,5 @@
 module Mince
-  module Mingo
+  module MongoDb
     require_relative 'config'
     require 'mongo'
     require 'singleton'

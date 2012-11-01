@@ -1,5 +1,5 @@
 module Mince
-  module Mingo
+  module MongoDb
     module Interface
       require_relative 'data_store'
       require_relative 'config'

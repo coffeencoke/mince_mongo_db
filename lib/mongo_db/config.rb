@@ -1,5 +1,5 @@
 module Mince # :nodoc:
-  module Mingo # :nodoc:
+  module MongoDb # :nodoc:
     require 'singleton'
 
     # = Config

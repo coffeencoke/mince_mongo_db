@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mingo (2.0.0.pre)
+    mince_mongo_db (2.0.0.pre.1)
       activesupport (~> 3.0)
       bson_ext (~> 1.5.2)
       mongo (~> 1.5.2)
@@ -62,7 +62,7 @@ DEPENDENCIES
   debugger (~> 1.2)
   guard-rspec (~> 0.6)
   mince (= 2.0.0.pre.2)
-  mingo!
+  mince_mongo_db!
   rake (~> 0.9)
   rb-fsevent (~> 0.9.0)
   redcarpet (~> 2.1)

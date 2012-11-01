@@ -1,5 +1,5 @@
 module Mince
-  module Mingo
+  module MongoDb
     module Version
       def self.major
         2

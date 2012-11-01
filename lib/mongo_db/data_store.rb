@@ -1,5 +1,5 @@
 module Mince
-  module Mingo
+  module MongoDb
     require 'singleton'
     require_relative 'connection'
 
@@ -21,7 +21,7 @@ module Mince
       attr_accessor :db
 
       def initialize
-        self.db = Mince::Mingo::Connection.db
+        self.db = Mince::MongoDb::Connection.db
       end
     end
   end
