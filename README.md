@@ -1,8 +1,8 @@
-# Mingo
+# MinceMongoDb
 
-Mingo is a ruby ORM to provide a quick way to develop with a MongoDB database in Ruby applications.
+MinceMongoDb is a ruby ORM to provide a quick way to develop with a MongoDB database in Ruby applications.
 
-Mingo is a database interface that abides to the [Mince](https://github.com/coffeencoke/mince/) interface API requirements and is officially supported by [Mince](https://github.com/coffeencoke/mince/).
+It is a database interface that abides to the [Mince](https://github.com/coffeencoke/mince/) interface API requirements and is officially supported by [Mince](https://github.com/coffeencoke/mince/).
 
 # How to use it
 
@@ -11,14 +11,13 @@ View the [Mince Wiki](https://github.com/coffeencoke/mince/wiki) on details on h
 Basically -
 
 ```
-gem install mince mingo
+gem install mince_mongo_db
 ```
 
 ```ruby
-require 'mince'
-require 'mingo'
+require 'mince_mongo_db'
 
-interface = Mince::Mingo::Interface
+interface = Mince::MongoDb::Interface
 interface.add 'tron_light_cycles', luminating_color: 'red', grid_locked: true, rezzed: false
 interface.add 'tron_light_cycles', luminating_color: 'blue', grid_locked: true, rezzed: true
 interface.find_all('tron_light_cycles') 
@@ -30,16 +29,17 @@ interface.get_for_key_with_value('tron_light_cycles', :luminating_color, 'blue')
 Change the database name
 
 ```ruby
-Mince::Mingo::Config.database = 'foo'
+Mince::MongoDb::Config.database = 'foo'
 ```
 
 # Links
 
-* [API Docs](http://rdoc.info/github/coffeencoke/mingo/update_to_v2/frames)
-* [Travis CI](https://travis-ci.org/#!/coffeencoke/mingo)
-* [Rubygems](https://rubygems.org/gems/mingo)
-* [Github](https://github.com/coffeencoke/mingo)
-* [Wiki](https://github.com/coffeencoke/mingo/wiki)
+* [API Docs](http://rdoc.info/github/coffeencoke/mince_mongo_db/master/frames)
+* [Travis CI](https://travis-ci.org/#!/coffeencoke/mince_mongo_db)
+* [Rubygems](https://rubygems.org/gems/mince_mongo_db)
+* [Github](https://github.com/coffeencoke/mince_mongo_db)
+* [Wiki](https://github.com/coffeencoke/mince_mongo_db/wiki)
+* [Issues](https://github.com/coffeencoke/mince_mongo_db/issues)
 * [Mince](https://github.com/coffeencoke/mince)
 
 # Contribute
