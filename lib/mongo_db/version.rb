@@ -2,7 +2,7 @@ module Mince
   module MongoDb
     module Version
       def self.major
-        2
+        1
       end
 
       def self.minor
