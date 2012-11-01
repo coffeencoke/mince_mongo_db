@@ -1,6 +1,6 @@
-require_relative '../../../lib/mongo_db/data_store'
+require_relative '../../../lib/mince_mongo_db/data_store'
 
-describe Mince::MongoDb::DataStore do
+describe MinceMongoDb::DataStore do
   let(:db) { mock }
   let(:collection) { mock }
   let(:collection_name) { mock }

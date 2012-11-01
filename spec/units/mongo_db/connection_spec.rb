@@ -1,6 +1,6 @@
-require_relative '../../../lib/mongo_db/connection'
+require_relative '../../../lib/mince_mongo_db/connection'
 
-describe Mince::MongoDb::Connection do
+describe MinceMongoDb::Connection do
   subject { described_class.instance }
 
   let(:mongo_connection) { mock 'a mongo connection object', :db => db }
@@ -8,7 +8,7 @@ describe Mince::MongoDb::Connection do
   let(:database_name) { mock }
 
   before do
-    Mince::MongoDb::Config.stub(database_name: database_name)
+    MinceMongoDb::Config.stub(database_name: database_name)
     subject.connection = mongo_connection
   end
 

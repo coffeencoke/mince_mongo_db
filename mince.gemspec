@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require 'mongo_db/version'
+require 'mince_mongo_db/version'
 
 Gem::Specification.new do |s|
   s.name        = "mince_mongo_db"
-  s.version     = Mince::MongoDb.version
+  s.version     = MinceMongoDb.version
   s.authors     = ["Matt Simpson", "Jason Mayer", "Asynchrony"]
   s.email       = ["matt@railsgrammer.com", "jason.mayer@gmail.com"]
   s.homepage    = "https://github.com/coffeencoke/#{s.name}"
@@ -14,19 +14,19 @@ Gem::Specification.new do |s|
   s.rubyforge_project = s.name
 
   s.files = %w(
-    lib/mongo_db.rb
-    lib/mongo_db/config.rb
-    lib/mongo_db/connection.rb
-    lib/mongo_db/data_store.rb
-    lib/mongo_db/interface.rb
-    lib/mongo_db/version.rb
+    lib/mince_mongo_db.rb
+    lib/mince_mongo_db/config.rb
+    lib/mince_mongo_db/connection.rb
+    lib/mince_mongo_db/data_store.rb
+    lib/mince_mongo_db/interface.rb
+    lib/mince_mongo_db/version.rb
   )
   s.test_files = %w(
     spec/integration/mince_interface_spec.rb
-    spec/units/mongo_db/config_spec.rb
-    spec/units/mongo_db/connection_spec.rb
-    spec/units/mongo_db/data_store_spec.rb
-    spec/units/mongo_db/interface_spec.rb
+    spec/units/mince_mongo_db/config_spec.rb
+    spec/units/mince_mongo_db/connection_spec.rb
+    spec/units/mince_mongo_db/data_store_spec.rb
+    spec/units/mince_mongo_db/interface_spec.rb
   )
   s.require_paths = ["lib"]
 

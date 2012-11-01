@@ -1,6 +1,6 @@
-require_relative '../../../lib/mongo_db/config'
+require_relative '../../../lib/mince_mongo_db/config'
 
-describe Mince::MongoDb::Config do
+describe MinceMongoDb::Config do
   it 'contains the primary key to used by the db interface' do
     described_class.primary_key.should == :_id
   end

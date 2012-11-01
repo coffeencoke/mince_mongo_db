@@ -17,7 +17,7 @@ gem install mince_mongo_db
 ```ruby
 require 'mince_mongo_db'
 
-interface = Mince::MongoDb::Interface
+interface = MinceMongoDb::Interface
 interface.add 'tron_light_cycles', luminating_color: 'red', grid_locked: true, rezzed: false
 interface.add 'tron_light_cycles', luminating_color: 'blue', grid_locked: true, rezzed: true
 interface.find_all('tron_light_cycles') 
@@ -29,7 +29,7 @@ interface.get_for_key_with_value('tron_light_cycles', :luminating_color, 'blue')
 Change the database name
 
 ```ruby
-Mince::MongoDb::Config.database = 'foo'
+MinceMongoDb::Config.database = 'foo'
 ```
 
 # Links
