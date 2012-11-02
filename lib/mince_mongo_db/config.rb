@@ -32,7 +32,7 @@ module MinceMongoDb # :nodoc:
     attr_accessor :primary_key, :database_name
 
     def initialize
-      self.primary_key = :_id
+      self.primary_key = '_id'
       self.database_name = 'mince'
     end
 

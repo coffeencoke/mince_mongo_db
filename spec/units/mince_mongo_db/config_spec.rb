@@ -2,7 +2,7 @@ require_relative '../../../lib/mince_mongo_db/config'
 
 describe MinceMongoDb::Config do
   it 'contains the primary key to used by the db interface' do
-    described_class.primary_key.should == :_id
+    described_class.primary_key.should == '_id'
   end
 
   describe 'the database name' do
