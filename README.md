@@ -23,7 +23,7 @@ interface.add 'tron_light_cycles', luminating_color: 'blue', grid_locked: true, 
 interface.find_all('tron_light_cycles') 
 	# => [{:luminating_color=>"red", :grid_locked=>true, :rezzed=>false}, {:luminating_color=>"blue", :grid_locked=>true, :rezzed=>true}] 
 interface.get_for_key_with_value('tron_light_cycles', :luminating_color, 'blue')
-	# => {:luminating_color=>"blue", :grid_locked=>true, :rezzed=>true} 
+	# => <Mongo::Cursor:0x3fc8421cad14 namespace='mince.tron_light_cycles' @selector={} @cursor_id=>
 ```
 
 Change the database name
