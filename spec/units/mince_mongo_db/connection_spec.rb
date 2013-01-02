@@ -14,6 +14,8 @@ describe MinceMongoDb::Connection do
   end
 
   it 'is a mongo connection for the configured host' do
+    subject.connection = mongo_connection
+
     subject.connection.should == mongo_connection
   end
 
