@@ -17,7 +17,7 @@ module MinceMongoDb
     end
 
     def initialize
-      self.connection = Mongo::Connection.new
+      self.connection = Mongo::Connection.new(Config.database_host)
     end
 
     def connection=(con)
