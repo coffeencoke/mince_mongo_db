@@ -17,22 +17,28 @@ module MinceMongoDb # :nodoc:
       instance.primary_key
     end
 
+    # Returns the name of the database mince is configured to connect to
     def self.database_name
       instance.database_name
     end
 
+    # Sets the name of the database mince is configured to use
     def self.database_name=(val)
       instance.database_name = val
     end
 
+    # Returns the host of the mongo database
     def self.database_host
       instance.database_host
     end
 
+    # Sets the host of the mongo database
     def self.database_host=(val)
       instance.database_host = val
     end
 
+    # Returns the test environment number, useful for when testing with multiple
+    # processes in parallel
     def self.test_env_number
       ENV['TEST_ENV_NUMBER']
     end

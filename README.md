@@ -29,7 +29,13 @@ interface.get_for_key_with_value('tron_light_cycles', :luminating_color, 'blue')
 Change the database name
 
 ```ruby
-MinceMongoDb::Config.database = 'foo'
+MinceMongoDb::Config.database_name = 'foo'
+```
+
+Change the database host
+
+```ruby
+MinceMongoDb::Config.database_host = 'db.myapp.com'
 ```
 
 # Links
