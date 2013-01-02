@@ -5,6 +5,19 @@ describe MinceMongoDb::Config do
     described_class.primary_key.should == '_id'
   end
 
+  it 'contains a database host' do
+    described_class.database_host.should == '127.0.0.1'
+  end
+
+  it 'can change the database host' do
+    original_host = described_class.database_host
+    new_host = mock
+    described_class.database_host = new_host
+    described_class.database_host.should == new_host
+
+    described_class.database_host = original_host
+  end
+
   describe 'the database name' do
     subject { described_class.database_name }
 

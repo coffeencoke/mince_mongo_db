@@ -25,15 +25,24 @@ module MinceMongoDb # :nodoc:
       instance.database_name = val
     end
 
+    def self.database_host
+      instance.database_host
+    end
+
+    def self.database_host=(val)
+      instance.database_host = val
+    end
+
     def self.test_env_number
       ENV['TEST_ENV_NUMBER']
     end
 
-    attr_accessor :primary_key, :database_name
+    attr_accessor :primary_key, :database_name, :database_host
 
     def initialize
       self.primary_key = '_id'
       self.database_name = 'mince'
+      self.database_host = '127.0.0.1'
     end
 
     def database_name=(name)
