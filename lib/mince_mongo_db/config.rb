@@ -6,35 +6,70 @@ module MinceMongoDb # :nodoc:
   # Config specifies the configuration settings
   #
   # @author Matt Simpson
+  #
+  # The following fields can be changed:
+  # * database_name - Defaults to 'mince'
+  # * database_host - Defaults to '127.0.0.1'
+  # * username - Defaults to nil
+  # * password - Defaults to nil
+  #
+  # The following fields cannot be changed:
+  # * primary_key
+  # * test_env_number
+  #
+  # You can change a field by passing a hash:
+  #
+  #   MinceMongoDb::Config.options = {
+  #     username: 'my_db_user',
+  #     password: 'my_db_passw0rd'
+  #   }
+  #
+  # Or you can change a field individually:
+  #
+  #   MinceMongoDb::Config.username = 'my_db_user'
+  #
+  # If you are running tests in parallel, make sure that
+  # ENV['TEST_ENV_NUMBER'] is set for the instance number for each
+  # parallel test.  This number is amended to the database name.
   class Config
     include Singleton
 
-    # Returns the primary key identifier for records.  This is necessary because not all databases use the same
-    # primary key.
-    #
-    # @return [Symbol] the name of the primary key field.
-    def self.primary_key
-      instance.primary_key
+    OPTIONS = %w(database_name database_host username password)
+
+    class << self
+      getters = %w(primary_key)
+      accessors = OPTIONS
+
+      (getters+accessors).each do |field|
+        define_method(field) do
+          instance.send(field)
+        end
+      end
+
+      accessors.each do |field|
+        define_method("#{field}=") do |val|
+          instance.send("#{field}=", val)
+        end
+      end
     end
 
-    # Returns the name of the database mince is configured to connect to
-    def self.database_name
-      instance.database_name
+    def self.options
+      {
+        database_name: database_name,
+        database_host: database_host,
+        username: username,
+        password: password
+      }
     end
 
-    # Sets the name of the database mince is configured to use
-    def self.database_name=(val)
-      instance.database_name = val
+    def self.options=(new_options)
+      whitelist_keys(new_options).each do |key, value|
+        send("#{key}=", value)
+      end
     end
 
-    # Returns the host of the mongo database
-    def self.database_host
-      instance.database_host
-    end
-
-    # Sets the host of the mongo database
-    def self.database_host=(val)
-      instance.database_host = val
+    def self.whitelist_keys(options)
+      options.select{|key, value| OPTIONS.include?(key.to_s) }
     end
 
     # Returns the test environment number, useful for when testing with multiple
@@ -43,7 +78,7 @@ module MinceMongoDb # :nodoc:
       ENV['TEST_ENV_NUMBER']
     end
 
-    attr_accessor :primary_key, :database_name, :database_host
+    attr_accessor :primary_key, :database_name, :database_host, :username, :password
 
     def initialize
       self.primary_key = '_id'
