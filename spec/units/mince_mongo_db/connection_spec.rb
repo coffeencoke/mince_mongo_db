@@ -9,7 +9,7 @@ describe MinceMongoDb::Connection do
   let(:database_host) { mock }
 
   before do
-    MinceMongoDb::Config.stub(database_name: database_name, database_host: database_host)
+    MinceMongoDb::Config.stub(database_name: database_name, database_host: database_host, username: nil, password: nil)
     Mongo::Connection.stub(:new).with(database_host).and_return(mongo_connection)
   end
 
@@ -24,5 +24,20 @@ describe MinceMongoDb::Connection do
     subject.connection = mongo_connection
 
     subject.db.should == db
+  end
+
+  context 'when authentication information is provided' do
+    let(:username) { mock }
+    let(:password) { mock }
+
+    before do
+      MinceMongoDb::Config.stub(username: username, password: password)
+    end    
+
+    it 'auths the connection' do
+      db.should_receive(:authenticate).with(username, password)
+
+      subject.connection = mongo_connection
+    end
   end
 end

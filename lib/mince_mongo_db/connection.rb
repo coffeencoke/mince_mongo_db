@@ -23,10 +23,25 @@ module MinceMongoDb
     def connection=(con)
       @connection = con
       self.db = connection.db(database_name)
+      auth
+    end
+
+    def auth
+      db.authenticate(Config.username, Config.password) if auth_provided?
+    end
+
+    def auth_provided?
+      !!Config.username && !!Config.password
     end
 
     def database_name
       Config.database_name
+    end
+  end
+
+  class Db
+    def initialize
+      
     end
   end
 end

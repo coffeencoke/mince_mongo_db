@@ -50,4 +50,74 @@ describe MinceMongoDb::Config do
       end
     end
   end
+
+  it 'does not contain a username' do
+    described_class.username.should be_nil
+  end
+
+  it 'can change the database username' do
+    new_username = mock
+    described_class.username = new_username
+    described_class.username.should == new_username
+
+    described_class.username = nil
+  end
+
+  it 'does not contain a password' do
+    described_class.password.should be_nil
+  end
+
+  it 'can change the database password' do
+    new_password = mock
+    described_class.password = new_password
+    described_class.password.should == new_password
+
+    described_class.password = nil
+  end
+
+  it 'can return all writable options' do
+    described_class.options.should == {
+      database_name: described_class.database_name,
+      database_host: described_class.database_host,
+      username: described_class.username,
+      password: described_class.password
+    }
+  end
+
+  it 'can change the options by passing a hash' do
+    original_options = described_class.options
+    new_options = {
+      database_name: 'new_database_name',
+      database_host: mock,
+      username: mock,
+      password: mock      
+    }
+    described_class.options = new_options
+    described_class.options.should == new_options
+
+    described_class.options = original_options
+  end
+
+  it 'can change a select number of the options by passing a hash' do
+    original_options = described_class.options
+    new_options = {
+      database_name: 'new_database_name',
+      database_host: mock
+    }
+    described_class.options = new_options
+    described_class.options.should == original_options.merge(new_options)
+
+    described_class.options = original_options
+  end
+
+  it 'does not allow assigning unacceptable options' do
+    original_options = described_class.options
+    new_options = {
+      foo: 'foo'
+    }
+    described_class.options = new_options
+    described_class.options.should == original_options
+
+    described_class.options = original_options
+  end
 end
