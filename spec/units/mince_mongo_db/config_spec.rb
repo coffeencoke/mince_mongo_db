@@ -50,4 +50,28 @@ describe MinceMongoDb::Config do
       end
     end
   end
+
+  it 'does not contain a username' do
+    described_class.username.should be_nil
+  end
+
+  it 'can change the database username' do
+    new_username = mock
+    described_class.username = new_username
+    described_class.username.should == new_username
+
+    described_class.username = nil
+  end
+
+  it 'does not contain a password' do
+    described_class.password.should be_nil
+  end
+
+  it 'can change the database password' do
+    new_password = mock
+    described_class.password = new_password
+    described_class.password.should == new_password
+
+    described_class.password = nil
+  end
 end

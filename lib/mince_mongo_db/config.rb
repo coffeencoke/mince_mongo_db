@@ -9,6 +9,23 @@ module MinceMongoDb # :nodoc:
   class Config
     include Singleton
 
+    class << self
+      getters = %w(primary_key)
+      accessors = %w(database_name database_host username password)
+
+      getters+accessors.each do |field|
+        define_method(field) do
+          instance.send(field)
+        end
+      end
+
+      accessors.each do |field|
+        define_method("#{field}=") do |val|
+          instance.send("#{field}=", val)
+        end
+      end
+    end
+
     # Returns the primary key identifier for records.  This is necessary because not all databases use the same
     # primary key.
     #
@@ -43,7 +60,7 @@ module MinceMongoDb # :nodoc:
       ENV['TEST_ENV_NUMBER']
     end
 
-    attr_accessor :primary_key, :database_name, :database_host
+    attr_accessor :primary_key, :database_name, :database_host, :username, :password
 
     def initialize
       self.primary_key = '_id'

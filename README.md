@@ -20,22 +20,30 @@ require 'mince_mongo_db'
 interface = MinceMongoDb::Interface
 interface.add 'tron_light_cycles', luminating_color: 'red', grid_locked: true, rezzed: false
 interface.add 'tron_light_cycles', luminating_color: 'blue', grid_locked: true, rezzed: true
-interface.find_all('tron_light_cycles') 
-	# => [{:luminating_color=>"red", :grid_locked=>true, :rezzed=>false}, {:luminating_color=>"blue", :grid_locked=>true, :rezzed=>true}] 
+all = interface.find_all('tron_light_cycles') 
+  # => <Mongo::Cursor:0x3fccb15d16b0 namespace='mince.tron_light_cycles' @selector={} @cursor_id=>
+all.to_a
+  # => [{"_id"=>BSON::ObjectId('511af435d20cae9055000001'), "luminating_color"=>"red", "grid_locked"=>true, "rezzed"=>false}, {"_id"=>BSON::ObjectId('511af435d20cae9055000002'), "luminating_color"=>"blue", "grid_locked"=>true, "rezzed"=>true}]
 interface.get_for_key_with_value('tron_light_cycles', :luminating_color, 'blue')
-	# => <Mongo::Cursor:0x3fc8421cad14 namespace='mince.tron_light_cycles' @selector={} @cursor_id=>
+  # => {"_id"=>BSON::ObjectId('511af435d20cae9055000002'), "luminating_color"=>"blue", "grid_locked"=>true, "rezzed"=>true}
 ```
 
-Change the database name
+Change some configs
 
 ```ruby
-MinceMongoDb::Config.database_name = 'foo'
-```
+MinceMongoDb::Config.database_name = 'foo'          # Defaults to 'mince'
+MinceMongoDb::Config.database_host = 'db.myapp.com' # Defaults to 'localhsot'
+MinceMongoDb::Config.username = 'app_db_user'       # Defaults to none
+MinceMongoDb::Config.password = 'passw0rd'          # Defaults to none
 
-Change the database host
+# Or
 
-```ruby
-MinceMongoDb::Config.database_host = 'db.myapp.com'
+MinceMongoDb::Config.options = {
+  database_name: 'foo',
+  database_host: 'db.myapp.com',
+  username: 'app_db_user',
+  password: 'passw0rd'
+}
 ```
 
 # Links
