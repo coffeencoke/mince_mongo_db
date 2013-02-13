@@ -51,16 +51,16 @@ module MinceMongoDb
       collection(collection_name).find
     end
 
-    def self.find(collection_name, key, value)
-      collection(collection_name).find_one({key.to_s => value})
+    def self.find(collection_name, value)
+      collection(collection_name).find_one({primary_key.to_s => value})
     end
 
-    def self.push_to_array(collection_name, identifying_key, identifying_value, array_key, value_to_push)
-      collection(collection_name).update({identifying_key.to_s => identifying_value}, {'$push' => {array_key.to_s => value_to_push}})
+    def self.push_to_array(collection_name, identifying_value, array_key, value_to_push)
+      collection(collection_name).update({primary_key.to_s => identifying_value}, {'$push' => {array_key.to_s => value_to_push}})
     end
 
-    def self.remove_from_array(collection_name, identifying_key, identifying_value, array_key, value_to_remove)
-      collection(collection_name).update({identifying_key.to_s => identifying_value}, {'$pull' => {array_key.to_s => value_to_remove}})
+    def self.remove_from_array(collection_name, identifying_value, array_key, value_to_remove)
+      collection(collection_name).update({primary_key.to_s => identifying_value}, {'$pull' => {array_key.to_s => value_to_remove}})
     end
 
     def self.containing_any(collection_name, key, values)

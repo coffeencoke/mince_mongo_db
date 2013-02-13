@@ -82,6 +82,12 @@ describe MinceMongoDb::Interface do
 
     interface.find_all(collection_name).should == return_data
   end
+  
+  it 'can find a record by id' do
+    collection.should_receive(:find_one).with(primary_key.to_s => mock_id).and_return(return_data)
+
+    interface.find(collection_name, mock_id).should == return_data
+  end
 
   it 'can replace a record' do
     collection.should_receive(:update).with({primary_key => data[primary_key]}, data)
@@ -92,10 +98,11 @@ describe MinceMongoDb::Interface do
   it 'can get one document' do
     field = "stuff"
     value = "more stuff"
+    mongo_scope = mock first: return_data
 
-    collection.should_receive(:find_one).with(field => value).and_return(return_data)
+    collection.should_receive(:find).with(field => value).and_return(mongo_scope)
 
-    interface.find(collection_name, field, value).should == return_data
+    interface.get_for_key_with_value(collection_name, field, value).should == return_data
   end
 
   it 'can clear the data store' do
@@ -133,14 +140,14 @@ describe MinceMongoDb::Interface do
   end
 
   it 'can push a value to an array for a specific record' do
-    collection.should_receive(:update).with({"key" => "value"}, { '$push' => { "array_key" => "value_to_push"}}).and_return(return_data)
+    collection.should_receive(:update).with({interface.primary_key.to_s => "value"}, { '$push' => { "array_key" => "value_to_push"}}).and_return(return_data)
 
-    interface.push_to_array(collection_name, :key, "value", :array_key, "value_to_push").should == return_data
+    interface.push_to_array(collection_name, "value", :array_key, "value_to_push").should == return_data
   end
 
   it 'can remove a value from an array for a specific record' do
-    collection.should_receive(:update).with({"key" => "value"}, { '$pull' => { "array_key" => "value_to_remove"}}).and_return(return_data)
+    collection.should_receive(:update).with({interface.primary_key.to_s => "value"}, { '$pull' => { "array_key" => "value_to_remove"}}).and_return(return_data)
 
-    interface.remove_from_array(collection_name, :key, "value", :array_key, "value_to_remove").should == return_data
+    interface.remove_from_array(collection_name, "value", :array_key, "value_to_remove").should == return_data
   end
 end
