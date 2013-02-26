@@ -9,7 +9,7 @@ module MinceMongoDb
     end
 
     def self.patch
-      0
+      1
     end
   end
 
