@@ -1,5 +1,7 @@
 # MinceMongoDb
 
+[![Travis CI](https://travis-ci.org/coffeencoke/mince_mongo_db.png)](https://travis-ci.org/#!/coffeencoke/mince_mongo_db)
+
 MinceMongoDb is a ruby ORM to provide a quick way to develop with a MongoDB database in Ruby applications.
 
 It is a database interface that abides to the [Mince](https://github.com/coffeencoke/mince/) interface API requirements and is officially supported by [Mince](https://github.com/coffeencoke/mince/).
