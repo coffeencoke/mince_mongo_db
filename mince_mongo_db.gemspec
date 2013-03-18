@@ -30,6 +30,8 @@ Gem::Specification.new do |s|
   )
   s.require_paths = ["lib"]
 
+  s.required_ruby_version = '>= 1.9.3'
+
   s.add_dependency('mongo', '~> 1.5.2')
   s.add_dependency('bson_ext', '~> 1.5.2')
   s.add_dependency('activesupport', '~> 3.0')
