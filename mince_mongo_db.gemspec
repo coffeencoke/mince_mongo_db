@@ -12,22 +12,9 @@ Gem::Specification.new do |s|
   s.description = %q{Mince interface library to provide a lightweight MongoDB ORM for Ruby.}
 
   s.rubyforge_project = s.name
-
-  s.files = %w(
-    lib/mince_mongo_db.rb
-    lib/mince_mongo_db/config.rb
-    lib/mince_mongo_db/connection.rb
-    lib/mince_mongo_db/data_store.rb
-    lib/mince_mongo_db/interface.rb
-    lib/mince_mongo_db/version.rb
-  )
-  s.test_files = %w(
-    spec/integration/mince_interface_spec.rb
-    spec/units/mince_mongo_db/config_spec.rb
-    spec/units/mince_mongo_db/connection_spec.rb
-    spec/units/mince_mongo_db/data_store_spec.rb
-    spec/units/mince_mongo_db/interface_spec.rb
-  )
+  s.files = Dir.glob("{bin,lib}/**/*") + %w(LICENSE README.md)
+  s.test_files = Dir.glob('spec/**/*.rb')
+  s.license = "MIT"
   s.require_paths = ["lib"]
 
   s.required_ruby_version = '>= 1.9.3'
