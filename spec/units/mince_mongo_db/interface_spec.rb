@@ -82,7 +82,7 @@ describe MinceMongoDb::Interface do
 
     interface.find_all(collection_name).should == return_data
   end
-  
+
   it 'can find a record by id' do
     collection.should_receive(:find_one).with(primary_key.to_s => mock_id).and_return(return_data)
 
@@ -131,6 +131,13 @@ describe MinceMongoDb::Interface do
     collection.should_receive(:find).with({"key1" => { "$in" => [1,2,4]} }).and_return(return_data)
 
     interface.containing_any(collection_name, "key1", [1,2,4]).should == return_data
+  end
+
+  it 'can get all records where a value is less than a given value' do
+    value = mock
+    collection.should_receive(:find).with({"key1" => { "$lt" => value } }).and_return(return_data)
+
+    interface.all_before(collection_name, "key1", value).should == return_data
   end
 
   it 'can get all records where the array includes a value' do

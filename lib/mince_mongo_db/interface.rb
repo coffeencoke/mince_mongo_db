@@ -63,6 +63,10 @@ module MinceMongoDb
       collection(collection_name).update({primary_key.to_s => identifying_value}, {'$pull' => {array_key.to_s => value_to_remove}})
     end
 
+    def self.all_before(collection_name, key, value)
+      collection(collection_name).find({key.to_s => {"$lt" => value}})
+    end
+
     def self.containing_any(collection_name, key, values)
       collection(collection_name).find({key.to_s => {"$in" => values}})
     end
